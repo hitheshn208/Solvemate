@@ -1,0 +1,73 @@
+body{
+    height:100vh;
+    background: linear-gradient(to bottom, white,rgba(209, 190, 169,0.3));
+    margin-top:0%;
+}
+form{
+    height:100%;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#nav_bar{
+        background-color: rgba(0, 0, 0, 0.2);
+        width:100%;
+        height:9%;      
+}
+img{
+    height:100%;
+    width:5%;
+}
+
+#outer{
+    width:50%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius:10px;
+    margin:auto;
+    margin-top:5%;
+    height:60%;
+    justify-content: space-evenly;
+    background-color:rgba(209, 190, 169,0.3);
+    transition: 1s;
+}
+#input_elements{
+    height:20vh;
+    width:58%;
+    display:grid;
+    grid-gap:5%;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+#input_elements input{
+    background-color: rgb(255, 255, 255);
+    border-radius:5px;  
+    border:none;  
+}
+ button{
+    color:white;
+    cursor:pointer;
+    background-color: #3a77db;
+    border:2px solid #3a77db;
+    padding:0%;
+    width:10%;
+    height: 7.5%;
+    border-radius:10px;
+    transition: 1.2s;
+}
+/*hover effects*/
+button:hover{
+    transform: scale(1.1);
+}
+#input_elements input:hover{
+    border: 2px solid  rgba(58, 119, 219,0.8);
+}
+#input_elements input:focus{
+    border: 2px solid  rgba(58, 119, 219, 0.8);
+}
+#outer:hover{
+    transform: scale(1.1);
+}

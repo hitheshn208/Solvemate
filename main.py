@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -6,6 +6,7 @@ from taylor_series import router as taylor_router  # your router file
 
 app = FastAPI()
 
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # For testing. Restrict later if needed.
@@ -16,9 +17,15 @@ app.add_middleware(
 # Mount frontend static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+# Serve HTML frontend
 @app.get("/")
 def serve_index():
     return FileResponse("static/index.html")
 
-# Register routes
+# Hidden health check route for UptimeRobot
+@app.get("/health")
+def health_check():
+    return Response(status_code=204)
+
+# Include Taylor series API router
 app.include_router(taylor_router)

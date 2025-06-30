@@ -4,33 +4,44 @@
     <meta charset="UTF-8">
     <title>Taylor Series Calculator</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="/static/taylor_series.css">
 
 </head>
 <body>
+    <nav id="nav_bar">
+        <img src="solvemate_logo.png" alt="sorry">
 
-    <h1>Taylor Series Calculator (Python Backend)</h1>
+    </nav>
 
-    <label>Function (Example: sin(x)): </label>
-    <input type="text" id="functionInput" value="sin(x)">
-    <br><br>
-
-    <label>Initial Guess (a): </label>
-    <input type="number" id="x0Input" value="0">
-    <br><br>
-
-    <label>Value to Approximate (x): </label>
-    <input type="number" id="xInput" value="0.5">
-    <br><br>
-
-    <label>Order: </label>
-    <input type="number" id="orderInput" value="4">
-    <br><br>
-
-    <button onclick="calculateTaylor()">Calculate</button>
-
-    <h2>Result: <span id="result"></span></h2>
-    <h2>Full Taylor Series: <span id="series"></span></h2>
+    <div id="outer">
+        <div id="main_heading">
+            <h1>Taylor Series Calculator </h1>
+        </div>
+        
+        <div id="input_elements">
+               <label>Function f(x) : </label>
+               <input type="text" id="functionInput" placeholder="Enter the function"  >
+               <label>Center point (a): </label>
+               <input type="number" id="x0Input" value="0" >
+               <label>Value to Approximate (x): </label>
+               <input type="number" id="xInput" value="0.5">
+               <label>Order: </label>
+            <input type="number" id="orderInput" value="4">
+        </div>
+        
+        
+              
+        <button onclick="calculateTaylor()">Calculate</button>
+        
+    </div>
+        <div id="result">
+            <h2>Result: <span id="result"></span></h2>
+            <h2>Full Taylor Series: <span id="series"></span></h2>
+        </div>
+    
+   
 
 
 
