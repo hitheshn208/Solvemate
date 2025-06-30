@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Taylor Series Calculator</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+
+    <h1>Taylor Series Calculator (Python Backend)</h1>
+
+    <label>Function (Example: sin(x)): </label>
+    <input type="text" id="functionInput" value="sin(x)">
+    <br><br>
+
+    <label>Initial Guess (a): </label>
+    <input type="number" id="x0Input" value="0">
+    <br><br>
+
+    <label>Value to Approximate (x): </label>
+    <input type="number" id="xInput" value="0.5">
+    <br><br>
+
+    <label>Order: </label>
+    <input type="number" id="orderInput" value="4">
+    <br><br>
+
+    <button onclick="calculateTaylor()">Calculate</button>
+
+    <h2>Result: <span id="result"></span></h2>
+    <h2>Full Taylor Series: <span id="series"></span></h2>
+
+
+
+
+    <script>
+async function calculateTaylor() {
+    const functionInput = document.getElementById('functionInput').value;
+    const x0 = parseFloat(document.getElementById('x0Input').value);
+    const x = parseFloat(document.getElementById('xInput').value);
+    const order = parseInt(document.getElementById('orderInput').value);
+    const resultDisplay = document.getElementById('result');
+    const seriesDisplay = document.getElementById('series');
+
+    const data = {
+        function: functionInput,
+        initial_guess: x0,
+        value: x,
+        order: order
+    };
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/taylor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        resultDisplay.innerText = `Approximated Value: ${result.taylor_approximation}`;
+
+        // Render formula with MathJax
+        seriesDisplay.innerHTML = `\\[ ${result.taylor_series} \\]`;
+        MathJax.typeset();  // Ask MathJax to render the new formula
+
+    } catch (error) {
+        resultDisplay.innerText = 'Error fetching API';
+        seriesDisplay.innerText = '';
+    }
+}
+
+    </script>
+
+</body>
+</html>

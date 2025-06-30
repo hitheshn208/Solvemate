@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding Two numbers</title>
+</head>
+<body>
+
+    <h1>Add Two Numbers</h1>
+
+    <form id="addForm">
+        <label for="num1">Num 1</label>
+        <input id="num1" type="number" required>
+        <br><br>
+        <label for="num2">Num 2</label>
+        <input id="num2" type="number" required>
+        <br><br><br>
+        <button type="submit">ADD</button>
+    </form>
+
+    <h2 id="result"></h2>
+
+    <script>
+        document.getElementById('addForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+
+            const response = await fetch('http://127.0.0.1:8000/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ num1, num2 })
+            });
+
+            const data = await response.json();
+            document.getElementById('result').innerText = "Sum of two numbers is : " + data.sum;
+        });
+    </script>
+</body>
+</html>
