@@ -7,11 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="/static/taylor_series.css">
+    <link rel="stylesheet" href="taylor_series.css">
 
 </head>
 <body>
     <nav id="nav_bar">
-        <img src="solvemate_logo.png" alt="sorry">
+        <img src="solvemate symbol.png" alt="sorry">
 
     </nav>
 
@@ -36,9 +37,18 @@
         <button onclick="calculateTaylor()">Calculate</button>
         
     </div>
-        <div id="result">
-            <h2>Result: <span id="result"></span></h2>
-            <h2>Full Taylor Series: <span id="series"></span></h2>
+
+        <div class="displayres">
+            <div class="resultdis">
+                    <p>Approximated Value:</p> 
+                     <span id="result"></span>
+            </div>
+
+            <div class="seriesdis">
+                    <p>Full Taylor Series:</p> 
+                    <span id="series"></span>
+            </div>
+
         </div>
     
    
@@ -72,7 +82,7 @@ async function calculateTaylor() {
         });
 
         const result = await response.json();
-        resultDisplay.innerText = `Approximated Value: ${result.taylor_approximation}`;
+        resultDisplay.innerText = ` ${result.taylor_approximation}`;
 
         // Render formula with MathJax
         seriesDisplay.innerHTML = `\\[ ${result.taylor_series} \\]`;
