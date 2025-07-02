@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Newton-Raphson Method</title>
+  <script>
+    async function calculateNR() {
+      const func = document.getElementById('functionInput').value;
+      const x0 = parseFloat(document.getElementById('x0Input').value);
+
+      const data = {
+        function: func,
+        initial_guess: x0
+      };
+
+      const response = await fetch("http://127.0.0.1:8000/newton", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (result.error) {
+        document.getElementById('result').innerText = result.error;
+        document.getElementById('table').innerHTML = '';
+        return;
+      }
+
+      document.getElementById('result').innerText = `Root ≈ ${result.root}`;
+
+      const table = document.getElementById('table');
+      table.innerHTML = `
+        <tr>
+          <th>Iteration</th><th>x</th><th>f(x)</th><th>f'(x)</th><th>Next x</th><th>Error</th>
+        </tr>
+      `;
+
+      result.iterations.forEach(row => {
+        table.innerHTML += `
+          <tr>
+            <td>${row.iteration}</td>
+            <td>${row.x}</td>
+            <td>${row["f(x)"]}</td>
+            <td>${row["f'(x)"]}</td>
+            <td>${row.next_x}</td>
+            <td>${row.error}</td>
+          </tr>
+        `;
+      });
+    }
+  </script>
+</head>
+
+<!-- Html code for Newton-Raphson -->
+
+
+<body>
+
+  <h1>Newton-Raphson Method</h1>
+  <label>Function: <input type="text" id="functionInput" value="x**3 - x - 2"></label><br><br>
+  <label>Initial Guess: <input type="number" id="x0Input" value="1.5"></label><br><br>
+  <button onclick="calculateNR()">Calculate</button>
+  <h2 id="result"></h2>
+  <table id="table" border="1" cellpadding="8" style="margin-top:20px;"></table>
+  
+</body>
+
+</html>

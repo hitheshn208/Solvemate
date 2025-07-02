@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from taylor_series import router as taylor_router  # your router file
+from newton_raphson import router as newton_router #router file for newton raphson
+
 
 app = FastAPI()
 
@@ -29,3 +31,6 @@ def health_check():
 
 # Include Taylor series API router
 app.include_router(taylor_router)
+# Include Newton Raphson API router
+app.include_router(newton_router)
+
