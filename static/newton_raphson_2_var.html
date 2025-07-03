@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Newton-Raphson for 2 Variables</title>
+  <script>
+    async function calculateNR2() {
+      const f1 = document.getElementById('f1').value;
+      const f2 = document.getElementById('f2').value;
+      const x0 = parseFloat(document.getElementById('x0').value);
+      const y0 = parseFloat(document.getElementById('y0').value);
+      const result = document.getElementById('result');
+      const table = document.getElementById('table');
+
+      const data = {
+        f1: f1,
+        f2: f2,
+        x0: x0,
+        y0: y0
+      };
+
+    //   http://127.0.0.1:8000/newton_raphson_2_var
+
+      try {
+        const response = await fetch('/newton_raphson_2_var', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const output = await response.json();
+
+        if (output.error) {
+          result.innerText = output.error;
+          table.innerHTML = "";
+          return;
+        }
+
+        result.innerText = `Root: x ≈ ${output.root[0]}, y ≈ ${output.root[1]}`;
+
+        table.innerHTML = `
+          <tr>
+            <th>Iteration</th><th>x</th><th>y</th><th>f1(x,y)</th><th>f2(x,y)</th><th>Next x</th><th>Next y</th><th>Error</th>
+          </tr>
+        `;
+
+        output.iterations.forEach(row => {
+          table.innerHTML += `
+            <tr>
+              <td>${row.iteration}</td>
+              <td>${row.x}</td>
+              <td>${row.y}</td>
+              <td>${row.f1}</td>
+              <td>${row.f2}</td>
+              <td>${row.next_x}</td>
+              <td>${row.next_y}</td>
+              <td>${row.error}</td>
+            </tr>
+          `;
+        });
+      } catch (error) {
+        result.innerText = "❌ Error fetching API";
+        table.innerHTML = "";
+      }
+    }
+
+    function resetForm() {
+      document.getElementById('f1').value = '';
+      document.getElementById('f2').value = '';
+      document.getElementById('x0').value = '';
+      document.getElementById('y0').value = '';
+      document.getElementById('result').innerText = '';
+      document.getElementById('table').innerHTML = '';
+    }
+  </script>
+</head>
+
+<!-- HTML Code -->
+
+<body>
+  <h1>Newton-Raphson Method (2 Variables)</h1>
+  <label>f1(x, y): <input type="text" id="f1" placeholder="e.g., x**2 + y**2 - 4"></label><br><br>
+  <label>f2(x, y): <input type="text" id="f2" placeholder="e.g., x*y - 1"></label><br><br>
+  <label>Initial x: <input type="number" id="x0"></label><br><br>
+  <label>Initial y: <input type="number" id="y0"></label><br><br>
+
+  <button onclick="calculateNR2()">Calculate</button>
+  <button onclick="resetForm()">Reset</button>
+
+  <h2 id="result"></h2>
+  <table id="table" border="1" cellpadding="8" style="margin-top:20px;"></table>
+</body>
+</html>
