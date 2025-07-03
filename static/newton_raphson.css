@@ -94,6 +94,6 @@ body{
 .results #table{
     padding:5px;
 }
-/* table{
-    display: none;
-} */
+ table{
+    background-color:  #FDF0D8;
+} 
