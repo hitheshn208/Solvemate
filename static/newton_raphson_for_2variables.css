@@ -10,6 +10,16 @@ body{
     align-items: center;
     justify-content: space-evenly;
     height:90%;
+    margin:0;
+
+}
+#heading{
+    margin:0;
+    width:100%;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: rgba(210, 105, 30,0.1);
 
 }
 .nav{
@@ -21,15 +31,6 @@ body{
 }
 .nav img{
     height:100%;
-}
-#heading{
-    margin:0;
-    width:100%;
-    text-align: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    background-color: rgba(210, 105, 30,0.1);
-
 }
 .form{
     border:2px solid black;
@@ -43,7 +44,7 @@ body{
     align-items: center;
     justify-content: space-between;
 }
-.form button{
+.form .buttons button{
     border:none;
     color: white;
     cursor: pointer;
@@ -52,13 +53,16 @@ body{
     padding: 0.5rem;
     height: 2rem;
     border-radius: 0.7rem;
+    transition: transform 0.5s;
     margin:1rem;
-    transition: transform 0.5s
 }
-.form .btn:hover{
+.form .buttons .btn2{
+    width:4.67375rem;
+}
+.form .buttons button:hover{
     transform: scale(1.1);
 }
-.form .btn:active{
+.form .buttons button:active{
     background-color: white;
     color:#3a77db;
 }
@@ -94,7 +98,7 @@ body{
     display: flex;
     flex-direction: column;
 }
-.results .root{
+.results .solution{
     line-height: 0.8rem;
     background-color: #FDF0D8;
     padding:5px;
