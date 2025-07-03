@@ -27,7 +27,7 @@ def serve_index():
     return FileResponse("static/index.html")
 
 # Hidden health check route for UptimeRobot
-@app.get("/health")
+@app.api_route("/health", methods=["GET", "HEAD"])
 def health_check():
     return Response(status_code=204)
 
