@@ -1,5 +1,6 @@
 html{
     background-color: rgb(250, 243, 231);
+    scroll-behavior: smooth;
 }
 
 body{
@@ -15,6 +16,13 @@ body{
     left: 0px;
     backdrop-filter: blur(10px);
     z-index: 2;
+    transform: translateY(0px);
+    transition: 0.3s linear;
+}
+
+.nav-hidden {
+  transform: translateY(-100px);
+  /*hides navbar */
 }
 
 .navigation img{
@@ -75,12 +83,12 @@ body{
     margin: 0px;
     font-size: 1.5rem;
     font-family: "Open Sans";
-    /* font-family: "KaTeX_Math";
-    font-style: italic; */
-    /* animation: fronttextani 0.8s ease-out 1 normal ; */
+    /* font-family: "KaTeX_Math"; */
+    font-style: italic;
+    animation: fronttextani 0.8s ease-out 1 normal ;
 }
 
-.typing{
+/* .typing{
     width: 0;
     overflow:hidden;
     white-space: nowrap;
@@ -88,7 +96,7 @@ body{
     animation-delay: 0.8s;
     animation: typing 4s steps(87) forwards , blink 0.7s infinite;
 }
-
+                                                                                
 @keyframes typing{
     from { width : 0;}
     to { width : 87ch;}
@@ -97,7 +105,7 @@ body{
 @keyframes blink{
     0% , 100% { border-color: transparent;}
     50% { border-color: white;}
-}
+} */
 
 @keyframes fronttextani{
     0%{ opacity : 0;
@@ -120,6 +128,11 @@ body{
     border: solid 2px white;
     animation: fronttextani 0.8s ease-out 1 normal ;
     opacity: 0.8;
+}
+
+.explorenow a{
+    text-decoration: none;
+     color: white;
 }
 
 .explorenow:hover{

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,7 @@
 
 <body>
 
-    <div class="navigation">
+    <div class="navigation" id="navbar">
         <img src="/static/solvemate symbol.png" alt="">
     </div>
 
@@ -23,12 +24,12 @@
             <img src="/static/solvemate symbol.png" alt="">
             <h1>SolveMate</h1>
             <p class="typing">An interactive web tool to quickly solve equations using <b>Numerical Methods</b> with step-by-step solutions.</p>
-            <button class="explorenow">EXPLORE NOW</button>
+            <button class="explorenow"><a href="#methods">EXPLORE NOW</a></button>
         </div>
     </div>
-    
+
 <div class="main">
-    <div class="heading">
+    <div class="heading" id="methods">
         Methods : 
     </div>
 
@@ -73,6 +74,26 @@
 <div class="footer">
   <img src="/static/github-mark-white.svg" alt="">
 </div>
+
+<script>
+const navbar = document.getElementById('navbar');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  const currentScrollY = window.scrollY;
+
+  if (currentScrollY > lastScrollY) {
+    // Scrolling down → hide navbar
+    navbar.classList.add('nav-hidden');
+  } else {
+    // Scrolling up → show navbar
+    navbar.classList.remove('nav-hidden');
+  }
+
+  lastScrollY = currentScrollY;
+});
+</script>
+
 
 </body>
 </html>
