@@ -10,10 +10,14 @@
     <link rel="stylesheet" href="taylor_series.css">
     <link rel="icon" href="/static/ symbol.png">
     <link rel="icon" href="solvemate symbol.png">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.3.1/math.min.js"></script>
+
+
 
 </head>
 <body>
-    <nav id="nav_bar">
+    <nav class="nav_bar" id="navbar">
         <img src="solvemate symbol.png" alt="sorry">
 
     </nav>
@@ -25,18 +29,19 @@
         
         <div id="input_elements">
                <label>Function f(x) : </label>
-               <input type="text" id="functionInput" placeholder="Enter the function"  >
+               <input type="text" id="functionInput" placeholder="e.g. sin(x), ln(x+1), sqrt(x)">
                <label>Center point (a): </label>
-               <input type="number" id="x0Input" value="0" >
+               <input type="number" id="x0Input" placeholder="Enter the expansion point a">
                <label>Value to Approximate (x): </label>
-               <input type="number" id="xInput" value="0.5">
+               <input type="number" id="xInput" placeholder="Enter the x-value to evaluate">
                <label>Order: </label>
-            <input type="number" id="orderInput" value="4">
+            <input type="number" id="orderInput" placeholder="Enter the Taylor series order ">
         </div>
         
-        
-              
+        <div class="btns">              
         <button onclick="calculateTaylor()">Calculate</button>
+        <button onclick="resetTaylor()">Reset</button>
+        </div>
         
     </div>
 
@@ -50,16 +55,83 @@
                     <p>Full Taylor Series:</p> 
                     <span id="series"></span>
             </div>
-
+            <div class="graph">
+                <p>Graph of the Taylor series:</p>
+                <div id="plot"></div>
+            </div>
         </div>
-    
+  <div class="footer">© 2025 Solvemate</div>  
    
   
 
 
 
-    <script>
-async function calculateTaylor() {
+<script>
+  function plotTaylorGraph(funcStr, taylorList) {
+
+    const xVals = math.range(-10, 10.1, 0.1).toArray(); // fixed range
+
+
+    const scope = { x: 0 };
+
+    // Compile original function
+    const fNode = math.parse(funcStr.replace(/\*\*/g, '^')).compile();
+    const yOriginal = xVals.map(val => {
+      scope.x = val;
+      try { return fNode.evaluate(scope); } catch { return null; }
+    });
+
+    const traces = [{
+      x: xVals,
+      y: yOriginal,
+      mode: 'lines',
+      name: 'Original f(x)',
+      line: { color: 'blue' }
+    }];
+
+    // Plot up to 5 Taylor approximations
+    taylorList.forEach((expr, i) => {
+      try {
+        const compiled = math.parse(expr.replace(/\*\*/g, '^')).compile();
+        const yTaylor = xVals.map(val => {
+          scope.x = val;
+          return compiled.evaluate(scope);
+        });
+
+        traces.push({
+          x: xVals,
+          y: yTaylor,
+          mode: 'lines',
+          name: `Order ${i + 1}`,
+          line: { dash: 'dot' }
+        });
+      } catch (e) {
+        console.log(`Error parsing Taylor order ${i + 1}`);
+      }
+    });
+
+    Plotly.newPlot('plot', traces, {
+  title: 'Taylor Series Approximation',
+  xaxis: {
+    title: 'x',
+    dtick: 1,
+    range: [-10, 10]
+  },
+  yaxis: {
+    title: 'f(x)',
+    dtick: 1,
+    range: [-2, 2]  // customize for zoom
+  },
+  legend: {
+    x: 1,
+    y: 1
+  }
+});
+
+
+  }
+
+  async function calculateTaylor() {
     const functionInput = document.getElementById('functionInput').value;
     const x0 = parseFloat(document.getElementById('x0Input').value);
     const x = parseFloat(document.getElementById('xInput').value);
@@ -68,35 +140,71 @@ async function calculateTaylor() {
     const seriesDisplay = document.getElementById('series');
 
     const data = {
-        function: functionInput,
-        initial_guess: x0,
-        value: x,
-        order: order
+      function: functionInput,
+      initial_guess: x0,
+      value: x,
+      order: order
     };
 
     try {
-        const response = await fetch('/taylor', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
+      const response = await fetch('http://127.0.0.1:8000/taylor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
 
-        const result = await response.json();
-        resultDisplay.innerText = ` ${result.taylor_approximation}`;
+      const result = await response.json();
 
-        // Render formula with MathJax
-        seriesDisplay.innerHTML = `\\[ ${result.taylor_series} \\]`;
-        MathJax.typeset();  // Ask MathJax to render the new formula
+      if (result.error) {
+        throw new Error(result.error);
+      }
+
+      resultDisplay.innerText = ` ${result.taylor_approximation}`;
+      seriesDisplay.innerHTML = `\\[ ${result.taylor_series} \\]`;
+      MathJax.typeset();
+
+      const exprList = result.taylor_list.map(expr => expr.replace(/\*\*/g, '^'));
+      plotTaylorGraph(data.function, exprList);
 
     } catch (error) {
-        resultDisplay.innerText = 'Error fetching API';
-        seriesDisplay.innerText = '';
+      resultDisplay.innerText = '❌ Error! Check your input!';
+      seriesDisplay.innerText = '';
+      document.getElementById('plot').innerHTML = '';
     }
-}
+  }
 
-    </script>
+  function resetTaylor() {
+    document.getElementById('functionInput').value = '';
+    document.getElementById('x0Input').value = '';
+    document.getElementById('xInput').value = '';
+    document.getElementById('orderInput').value = '';
+    document.getElementById('result').innerText = '';
+    document.getElementById('series').innerText = '';
+    document.getElementById('plot').innerHTML = '';
+  }
+
+
+
+
+  const navbar = document.getElementById('navbar');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  const currentScrollY = window.scrollY;
+
+  if (currentScrollY > lastScrollY) {
+    // Scrolling down → hide navbar
+    navbar.classList.add('nav-hidden');
+  } else {
+    // Scrolling up → show navbar
+    navbar.classList.remove('nav-hidden');
+  }
+
+  lastScrollY = currentScrollY;
+});
+
+</script>
+
 
 </body>
 </html>

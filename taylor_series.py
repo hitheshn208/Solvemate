@@ -12,7 +12,6 @@ class TaylorInput(BaseModel):
 
 @router.post("/taylor")
 def taylor_series(input_data: TaylorInput):
-    # Extract input values
     func_str = input_data.function
     x0 = input_data.initial_guess
     x_val = input_data.value
@@ -21,38 +20,26 @@ def taylor_series(input_data: TaylorInput):
     x = sp.symbols('x')
     f = sp.sympify(func_str)
 
-    taylor_sum = 0
-    taylor_expansion = []
+    try:
+        # Generate the full Taylor series
+        full_series = f.series(x, x0, order + 1).removeO()
+        latex_series = sp.latex(full_series)
+        math_expr_str = str(full_series.expand())
 
-    for n in range(order + 1):
-        # Derivative and its value at x0
-        derivative = f.diff(x, n)
-        derivative_at_x0 = derivative.subs(x, x0).evalf(4)  # ✅ Round to 4 digits
+        # Generate up to 5 Taylor series of order 1 to 5
+        taylor_functions = []
+        for n in range(1, min(6, order + 1)):
+            approx = f.series(x, x0, n + 1).removeO()
+            taylor_functions.append(str(approx.expand()))
 
-        # Add term to final approximation
-        term = (derivative_at_x0 * (x - x0)**n) / sp.factorial(n)
-        taylor_sum += term
+        approximation = float(full_series.subs(x, x_val).evalf())
 
-        # ✅ Skip 0 terms
-        if derivative_at_x0 == 0:
-            continue
+        return {
+            "taylor_approximation": round(approximation, 5),
+            "taylor_series": latex_series,
+            "taylor_expression": math_expr_str,
+            "taylor_list": taylor_functions
+        }
 
-        # ✅ Handle sign nicely
-        sign = "-" if derivative_at_x0 < 0 else "+"
-        abs_val = abs(derivative_at_x0)
-
-        # ✅ Avoid leading '+' for the first term
-        if not taylor_expansion:
-            latex_term = f"{sp.latex(abs_val)} \\frac{{(x - {x0})^{{{n}}}}}{{{sp.factorial(n)}}}"
-        else:
-            latex_term = f"{sign} {sp.latex(abs_val)} \\frac{{(x - {x0})^{{{n}}}}}{{{sp.factorial(n)}}}"
-
-        taylor_expansion.append(latex_term)
-
-    # Join all terms with spaces for rendering
-    taylor_series_str = " ".join(taylor_expansion)
-
-    return {
-        "taylor_approximation": round(float(taylor_sum.subs(x, x_val)), 4),  # ✅ Round final answer
-        "taylor_series": taylor_series_str  # ✅ Clean LaTeX string
-    }
+    except Exception as e:
+        return {"error": "Failed to generate Taylor series. Check the input."}
