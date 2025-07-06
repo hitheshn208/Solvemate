@@ -6,15 +6,21 @@ router = APIRouter()
 
 class Taylor2Input(BaseModel):
     function: str
-    x0: float
-    y0: float
+    x0: str
+    y0: str
     order: int
 
 @router.post("/taylor2")
 def taylor_series_two_var(data: Taylor2Input):
     x, y = sp.symbols('x y')
-    f = sp.sympify(data.function)
-    x0, y0 = data.x0, data.y0
+    
+    try:
+        f = sp.sympify(data.function)
+        x0 = float(sp.sympify(data.x0))
+        y0 = float(sp.sympify(data.y0))
+    except Exception:
+        return {"error": "❌ Invalid input for x0 or y0. Please use numeric values like 1, pi, sqrt(2)."}
+    
     order = min(data.order, 4)  # limit to 4
 
     taylor = 0
