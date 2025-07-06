@@ -53,7 +53,7 @@ body{
     padding: 0.5rem;
     height: 2rem;
     border-radius: 0.7rem;
-    transition: transform 0.5s;
+    transition: 0.5s;
     margin:1rem;
 }
 .form .buttons .btn2{
