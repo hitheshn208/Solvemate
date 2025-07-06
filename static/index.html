@@ -16,7 +16,25 @@
 <body>
 
     <div class="navigation" id="navbar">
+        <div class="symbols">
         <img src="/static/solvemate symbol.png" alt="">
+        <span class="navname">SolveMate</span>
+        </div>
+
+        <div class="navbaroptions">
+            <select class="navdropdown" placeholder="Calculate Now" id="method-select">
+                <option disabled selected>Calculate</option>
+                <option value="taylor_series.html">Taylor Series (1var)</option>
+                <option value="/static/taylor2.html">Taylor Series (2var)</option>
+                <option value="/static/newton_raphosn.html">Newton Raphson (1var)</option>
+                <option value="/static/newton_raphson_2_var.html">Newton Raphson (2var)</option>
+                <option value="#">Euler Method</option>
+                <option value="#">Modified Euler's Method</option>
+                <optio valuef="#">Runge-Kutta Method</option>
+            </select>
+            <span>About</span>
+        </div>
+
     </div>
 
     <div class="frontpage">
@@ -92,6 +110,19 @@ window.addEventListener('scroll', () => {
 
   lastScrollY = currentScrollY;
 });
+
+// Redirect on selection
+  document.getElementById("method-select").addEventListener("change", function () {
+    const url = this.value;
+    if (url) window.location.href = url;
+  });
+
+  // Reset to default when page loads
+  window.addEventListener("pageshow", function () {
+    const select = document.getElementById("method-select");
+    if (select) select.selectedIndex = 0;
+  });
+
 </script>
 
 
