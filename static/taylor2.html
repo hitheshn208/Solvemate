@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>2-Variable Taylor Series</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.3.1/math.min.js"></script>
+</head>
+<body>
+  <h1>2-Variable Taylor Series (Up to 4th Order)</h1>
+  <label>Function f(x, y): <input type="text" id="function" placeholder="e.g. sin(x*y) + x**2"></label><br><br>
+  <label>Initial x₀: <input type="number" id="x0" value="0"></label><br><br>
+  <label>Initial y₀: <input type="number" id="y0" value="0"></label><br><br>
+  <label>Order (≤ 4): <input type="number" id="order" value="2" min="1" max="4"></label><br><br>
+  <button onclick="generateTaylor()">Generate</button>
+  <button onclick="resetForm()">Reset</button>
+
+  <h2>LaTeX Series:</h2>
+  <div id="latex" style="font-size: 1.4rem; text-align:center;"></div>
+
+  <script>
+    async function generateTaylor() {
+      const func = document.getElementById('function').value;
+      const x0 = parseFloat(document.getElementById('x0').value);
+      const y0 = parseFloat(document.getElementById('y0').value);
+      const order = parseInt(document.getElementById('order').value);
+      const latexDisplay = document.getElementById('latex');
+
+      const data = { function: func, x0: x0, y0: y0, order: order };
+
+      try {
+        const res = await fetch("/taylor2", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        latexDisplay.innerHTML = `\\[ ${result.latex} \\]`;
+        MathJax.typeset();
+
+      } catch (err) {
+        latexDisplay.innerText = "❌ Error fetching API";
+      }
+    }
+
+    function resetForm() {
+      document.getElementById('function').value = '';
+      document.getElementById('x0').value = '';
+      document.getElementById('y0').value = '';
+      document.getElementById('order').value = 2;
+      document.getElementById('latex').innerText = '';
+    }
+  </script>
+</body>
+</html>

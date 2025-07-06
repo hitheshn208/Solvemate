@@ -2,9 +2,10 @@ from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from taylor_series import router as taylor_router  # your router file
-from newton_raphson import router as newton_router #router file for newton raphson
+from taylor_series import router as taylor_router
+from newton_raphson import router as newton_router 
 from newton_raphson_2_var import router as newton2_router
+from taylor2 import router as taylor2_router
 
 
 
@@ -38,3 +39,6 @@ app.include_router(newton_router)
 
 # Include Newton Raphson for 2 variable API router
 app.include_router(newton2_router)
+
+# Include Taylor series for 2 variable API router
+app.include_router(taylor2_router)
