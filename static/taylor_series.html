@@ -29,7 +29,7 @@
         
         <div id="input_elements">
                <label>Function f(x) : </label>
-               <input type="text" id="functionInput" placeholder="e.g. sin(x), ln(x+1), sqrt(x)">
+               <input type="text" id="functionInput" placeholder="e.g. sin(x), ln(x+1), sqrt(x), exp(x)">
                <label>Center point (a): </label>
                <input type="number" id="x0Input" placeholder="Enter the expansion point a">
                <label>Value to Approximate (x): </label>
@@ -148,7 +148,7 @@
 
     // http://127.0.0.1:8000/taylor
     try {
-      const response = await fetch('/taylor', {
+      const response = await fetch('http://127.0.0.1:8000/taylor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
