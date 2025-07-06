@@ -13,8 +13,7 @@ body{
     margin:0;
 
 }
-#heading{
-    /* margin-top:1rem; */
+.heading{
     width:100%;
     text-align: center;
     border-top-left-radius: 10px;
