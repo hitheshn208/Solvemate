@@ -11,6 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.3.1/math.min.js"></script>
 </head>
 <body>
+<<<<<<< HEAD
    <div class="nav">
     <img src="solvemate symbol.png" alt="">
   </div>
@@ -37,6 +38,18 @@
     <h2>LaTeX Series:</h2>
     <div id="latex" style="font-size: 1.4rem; text-align:center;"></div>
   </div>
+=======
+  <h1>2-Variable Taylor Series (Up to 4th Order)</h1>
+  <label>Function f(x, y): <input type="text" id="function" placeholder="e.g. sin(x*y) + x**2"></label><br><br>
+  <label>Initial x₀: <input type="text" id="x0" value="0"></label><br><br>
+  <label>Initial y₀: <input type="text" id="y0" value="0"></label><br><br>
+  <label>Order (≤ 4): <input type="number" id="order" value="2" min="1" max="4"></label><br><br>
+  <button onclick="generateTaylor()">Generate</button>
+  <button onclick="resetForm()">Reset</button>
+
+  <h2>LaTeX Series:</h2>
+  <div id="latex" style="font-size: 1.4rem; text-align:center;"></div>
+>>>>>>> 3d81674513e9eabe0d9306f7986985629dea6cae
 
   <script>
     async function generateTaylor() {

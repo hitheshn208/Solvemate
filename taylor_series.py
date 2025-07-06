@@ -6,15 +6,20 @@ router = APIRouter()
 
 class TaylorInput(BaseModel):
     function: str
-    initial_guess: float
-    value: float
+    initial_guess: str
+    value: str
     order: int
 
 @router.post("/taylor")
 def taylor_series(input_data: TaylorInput):
-    func_str = input_data.function
-    x0 = input_data.initial_guess
-    x_val = input_data.value
+    
+    try:
+        func_str = input_data.function
+        x0 = float(sp.sympify(data.initial_guess))
+        x_val = float(sp.sympify(data.value))
+    except Exception:
+        return {"error": "❌ Invalid input for initial guess or value. Use numbers like pi/2 or sqrt(2)."}
+
     order = input_data.order
 
     x = sp.symbols('x')
