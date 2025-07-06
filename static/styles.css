@@ -72,7 +72,7 @@ select{
     border:none;
     width:7rem;
     font-size: 1.2rem;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   font-family: "Zilla Slab", sans-serif;
     padding-left: 0.25rem;
     transition: text-decoration 0.4s ease;
     cursor: pointer;
@@ -92,17 +92,19 @@ option a{
 
 .navdropdown:hover{
     text-decoration: underline solid 1px;
+    text-shadow: white 0px 0px 10px;
 }
 
 .navbaroptions span{
     color: white;
     text-align: center;
     font-size: 1.2rem;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Zilla Slab", sans-serif;
 }
 
 .navbaroptions span:hover{
     text-decoration: underline solid 1px;
+    text-shadow: white 0px 0px 10px;
 }
 
 .frontpage{
@@ -268,9 +270,9 @@ option a{
     margin-left:0.5rem;
     font-size: 2rem;
     margin-top: 0.5rem;
-    text-wrap: nowrap;
+    text-wrap: wrap;
     overflow: hidden;
-    width:25ch;
+    width:inherit;
     height: 6.5rem;
     text-decoration:none;
     color: black;
@@ -319,11 +321,6 @@ option a{
 
 .footer img{
   height: 2rem;
-}
-
-
-.scrollingtxt:hover{
-    animation: scrollani 1s linear infinite normal;
 }
 
 @keyframes scrollani{
