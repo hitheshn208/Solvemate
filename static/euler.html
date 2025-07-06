@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Euler's Method - SolveMate</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+    }
+
+    input {
+      padding: 6px;
+      width: 200px;
+      margin-top: 5px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 8px 16px;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    table {
+      margin-top: 30px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #0077cc;
+      color: white;
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Euler's Method (First Order ODE)</h1>
+
+  <label>dy/dx = <input type="text" id="function" placeholder="dy/dx = f(x, y)"></label>
+  <label>x₀: <input type="number" id="x0" value="0" step="any"></label>
+  <label>y₀: <input type="number" id="y0" value="0" step="any"></label>
+  <label>Target x: <input type="number" id="xTarget" value="0.2" step="any"></label>
+  <label>Step size (h): <input type="number" id="step" value="0.1" step="any"></label>
+
+  <button onclick="calculateEuler()">Calculate</button>
+  <button onclick="resetEuler()">Reset</button>
+
+  <div id="result"></div>
+  <div id="error" class="error"></div>
+  <div id="table-container"></div>
+
+  <script>
+    async function calculateEuler() {
+      const func = document.getElementById("function").value;
+      const x0 = parseFloat(document.getElementById("x0").value);
+      const y0 = parseFloat(document.getElementById("y0").value);
+      const xTarget = parseFloat(document.getElementById("xTarget").value);
+      const h = parseFloat(document.getElementById("step").value);
+
+      const resultDiv = document.getElementById("result");
+      const errorDiv = document.getElementById("error");
+      const tableDiv = document.getElementById("table-container");
+
+      resultDiv.innerText = "";
+      errorDiv.innerText = "";
+      tableDiv.innerHTML = "";
+
+      const data = {
+        function: func,
+        x0: x0,
+        y0: y0,
+        x_target: xTarget,
+        h: h
+      };
+
+      try {
+        const res = await fetch("/euler", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        if (result.error) {
+          errorDiv.innerText = result.error;
+          return;
+        }
+
+        resultDiv.innerText = `✅ Final Approximation: y(${xTarget}) ≈ ${result.result}`;
+
+        // Build the step table
+        let table = `<table><tr><th>Step</th><th>x</th><th>y</th></tr>`;
+        result.steps.forEach((step, index) => {
+          table += `<tr><td>${index}</td><td>${step.x}</td><td>${step.y}</td></tr>`;
+        });
+        table += `</table>`;
+        tableDiv.innerHTML = table;
+
+      } catch (err) {
+        errorDiv.innerText = "❌ Error fetching API";
+      }
+    }
+
+    function resetEuler() {
+      document.getElementById("function").value = "";
+      document.getElementById("x0").value = "";
+      document.getElementById("y0").value = "";
+      document.getElementById("xTarget").value = "";
+      document.getElementById("step").value = "";
+      document.getElementById("result").innerText = "";
+      document.getElementById("error").innerText = "";
+      document.getElementById("table-container").innerHTML = "";
+    }
+  </script>
+</body>
+</html>

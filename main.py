@@ -6,6 +6,7 @@ from taylor_series import router as taylor_router
 from newton_raphson import router as newton_router 
 from newton_raphson_2_var import router as newton2_router
 from taylor2 import router as taylor2_router
+from euler import router as euler_router
 
 
 
@@ -42,3 +43,6 @@ app.include_router(newton2_router)
 
 # Include Taylor series for 2 variable API router
 app.include_router(taylor2_router)
+
+# Include Euler method API router
+app.include_router(euler_router)
