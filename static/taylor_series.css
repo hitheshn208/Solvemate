@@ -1,3 +1,7 @@
+*{
+    font-family: 'Segoe UI', sans-serif;
+}
+
 body{
     background-color: rgb(250, 243, 231);
     margin-top:0%;
