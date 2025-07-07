@@ -19,7 +19,7 @@ body{
     position: fixed;
     height: 4rem;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.6); 
+    background-color: rgba(0, 0, 0, 1); 
     top: 0px;
     left: 0px;
     backdrop-filter: blur(10px);
@@ -34,7 +34,6 @@ body{
 
 .nav-hidden {
   transform: translateY(-100px);
-  /*hides navbar */
 }
 
 .navigation .symbols{
@@ -165,17 +164,12 @@ body{
 .results{
     margin-top: 2rem;
     width:67rem;
-    height:20%;
+    height:fit-content;
+    min-height: 20%;
     display: flex;
     flex-direction: column;
 }
-.results .root{
-    line-height: 0.8rem;
-    background-color: #FDF0D8;
-    padding:5px;
-    border-radius: 5px;
-    border: 2px solid rgb(200, 170, 0);
-}
+
 .results #table{
     padding:5px;
 }
@@ -210,4 +204,34 @@ th{
 .fortable{
     height:fit-content;
     width:100%;
+}
+
+.results .root{
+    line-height: 0.8rem;
+    background-color: #FDF0D8;
+    border-radius: 5px;
+    border: 2px solid rgb(200, 170, 0);
+    display: flex;
+    flex-direction: column;
+    height:6rem;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem; 
+}
+
+.resulthead{
+    margin:0;
+    width:inherit;
+    background-color: rgb(255, 227, 175) ;
+    font-size: medium;
+    height: 2rem;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem; 
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    font-weight: 700;
+    justify-self: flex-start;
+}
+
+#result{
+    padding-left: 0.25rem;
 }

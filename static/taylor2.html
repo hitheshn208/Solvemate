@@ -44,15 +44,15 @@
   <script>
     async function generateTaylor() {
       const func = document.getElementById('function').value;
-      const x0 = parseFloat(document.getElementById('x0').value);
-      const y0 = parseFloat(document.getElementById('y0').value);
+      const x0 = document.getElementById('x0').value;   // ✅ keep as string
+      const y0 = document.getElementById('y0').value;   // ✅ keep as string
       const order = parseInt(document.getElementById('order').value);
       const latexDisplay = document.getElementById('latex');
 
       const data = { function: func, x0: x0, y0: y0, order: order };
 
       try {
-        const res = await fetch("/taylor2", {
+        const res = await fetch("http://127.0.0.1:8000/taylor2", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)

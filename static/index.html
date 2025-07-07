@@ -22,17 +22,8 @@
         </div>
 
         <div class="navbaroptions">
-            <select class="navdropdown" placeholder="Calculate Now" id="method-select">
-                <option disabled selected>Calculate</option>
-                <option value="/static/taylor_series.html">Taylor Series (1var)</option>
-                <option value="/static/taylor2.html">Taylor Series (2var)</option>
-                <option value="/static/newton_raphosn.html">Newton Raphson (1var)</option>
-                <option value="/static/newton_raphson_2_var.html">Newton Raphson (2var)</option>
-                <option value="#">Euler Method</option>
-                <option value="#">Modified Euler's Method</option>
-                <optio valuef="#">Runge-Kutta Method</option>
-            </select>
-            <span>About</span>
+           <span><a href="#methods">Calculate</a></span>
+            <span>About Us</span>
         </div>
 
     </div>
@@ -59,10 +50,10 @@
             <a href="/static/taylor_series.html"  target="_blank" class="link"><b> ></b></a>
         </div>
 
-        <div class="cards">
+        <!-- <div class="cards">
             <a href="/static/taylor2.html"><h4>Taylor Series for 2 variable</h4></a>
             <a href="#"  target="_blank"  class="link"><b> ></b></a>
-        </div>
+        </div> -->
         
         <div class="cards">
             <a href="/static/newton_raphosn.html"><h4>Newton Raphson for 1 variable</h4></a>
@@ -120,19 +111,6 @@ window.addEventListener('scroll', () => {
 
   lastScrollY = currentScrollY;
 });
-
-// Redirect on selection
-  document.getElementById("method-select").addEventListener("change", function () {
-    const url = this.value;
-    if (url) window.location.href = url;
-  });
-
-  // Reset to default when page loads
-  window.addEventListener("pageshow", function () {
-    const select = document.getElementById("method-select");
-    if (select) select.selectedIndex = 0;
-  });
-
 </script>
 </body>
 </html>

@@ -12,15 +12,18 @@
     <link rel="icon" href="solvemate symbol.png">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.3.1/math.min.js"></script>
-
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
 
 </head>
 <body>
-    <nav class="nav_bar" id="navbar">
-        <img src="solvemate symbol.png" alt="sorry">
-
-    </nav>
+    <div class="navigation" id="navbar">
+        <div class="symbols">
+        <img src="/static/solvemate symbol.png" alt="">
+        <span class="navname">SolveMate</span>
+        </div>
+        <div class="home"><a href="/static/index.html">HOME</a></div>
+    </div>
 
     <div id="outer">
         <div id="heading">
@@ -133,8 +136,8 @@
 
   async function calculateTaylor() {
     const functionInput = document.getElementById('functionInput').value;
-    const x0 = parseFloat(document.getElementById('x0Input').value);
-    const x = parseFloat(document.getElementById('xInput').value);
+    const x0 = document.getElementById('x0Input').value;
+    const x = document.getElementById('xInput').value;
     const order = parseInt(document.getElementById('orderInput').value);
     const resultDisplay = document.getElementById('result');
     const seriesDisplay = document.getElementById('series');
@@ -148,7 +151,7 @@
 
     // http://127.0.0.1:8000/taylor
     try {
-      const response = await fetch('/taylor', {
+      const response = await fetch('http://127.0.0.1:8000/taylor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)

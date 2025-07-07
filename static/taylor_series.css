@@ -8,7 +8,9 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    min-height: 100vh;
+    padding-top: 6rem ;
+    gap:3rem;
 }
 form{
     height:100%;
@@ -30,26 +32,62 @@ form{
   box-sizing: border-box;
 }
 
-.nav_bar{
-    position: sticky;
-    background-color: rgba(0, 0, 0, 0.8);
-    margin-bottom: 1rem;
-    backdrop-filter: blur(4px);
-    top: 0rem;
-    left: 0rem;
+.navigation{
+    position: fixed;
     height: 4rem;
     width: 100%;
-    transition: 0.3s ease;
+    background-color: rgba(0, 0, 0, 1); 
+    top: 0px;
+    left: 0px;
+    backdrop-filter: blur(10px);
+    z-index: 2;
+    transform: translateY(0px);
+    transition: 0.3s linear;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.nav-hidden 
-{
+.nav-hidden {
   transform: translateY(-100px);
-  /*hides navbar */
 }
 
-img{
-    height:100%;
+.navigation .symbols{
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    height: inherit;
+    align-items: center;
+}
+
+.navigation img{
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+.navigation .navname{
+    color: white;
+    font-size:2rem;
+    font-family: "Zilla Slab", sans-serif !important; 
+     font-weight: 500;
+} 
+
+.home a{
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: "Zilla Slab", sans-serif;
+    text-decoration: none;
+}
+
+.home{
+    padding-right: 3rem;
+}
+
+.home:hover{
+    text-decoration: underline solid 1px;
+    text-shadow: white 0px 0px 10px;
 }
 
 #outer{
@@ -180,7 +218,7 @@ img{
     border-bottom-right-radius: 1rem;
     border-bottom-left-radius: 1rem;
     height:fit-content;
-    min-height: 3rem;
+    min-height: 5rem;
 }
 
 mjx-container[jax="CHTML"][display="true"] mjx-math{
@@ -273,5 +311,6 @@ input::placeholder{
     width: 100%;
     height: fit-content;
     background-color: rgba(0, 0, 0, 0.8);
-    color: white
+    color: white;
+    justify-self: flex-end;
 }

@@ -15,10 +15,12 @@ def taylor_series(input_data: TaylorInput):
     
     try:
         func_str = input_data.function
-        x0 = float(sp.sympify(data.initial_guess))
-        x_val = float(sp.sympify(data.value))
+        x0 = float(sp.sympify(input_data.initial_guess))  # ✅ fixed
+        x_val = float(sp.sympify(input_data.value))       # ✅ fixed
     except Exception:
-        return {"error": "❌ Invalid input for initial guess or value. Use numbers like pi/2 or sqrt(2)."}
+        return {
+            "error": "❌ Invalid input for initial guess or value. Use numbers like pi/2 or sqrt(2)."
+        }
 
     order = input_data.order
 
