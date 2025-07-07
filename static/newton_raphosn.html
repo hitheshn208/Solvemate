@@ -19,44 +19,48 @@
         initial_guess: x0
       };
 
-      // http://127.0.0.1:8000/newton
-      const response = await fetch("http://127.0.0.1:8000/newton" , {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
+      try {
+        const response = await fetch("http://127.0.0.1:8000/newton", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
 
-      const result = await response.json();
+        const result = await response.json();
 
-      if (result.error) {
-        document.getElementById('result').innerText = result.error;
-        document.getElementById('table').innerHTML = '';
-        return;
-      }
+        if (result.error) {
+          document.getElementById('result').innerText = result.error;
+          document.getElementById('table').innerHTML = '';
+          return;
+        }
 
-      document.getElementById('result').innerText = `Root ≈ ${result.root}`;
+        document.getElementById('result').innerText = `Root ≈ ${result.root}`;
 
-      const table = document.getElementById('table');
-      table.innerHTML = `
-        <tr>
-          <th>Iteration</th><th>x</th><th>f(x)</th><th>f'(x)</th><th>Next x</th><th>Error</th>
-        </tr>
-      `;
-
-      result.iterations.forEach(row => {
-        table.innerHTML += `
+        const table = document.getElementById('table');
+        table.innerHTML = `
           <tr>
-            <td>${row.iteration}</td>
-            <td>${row.x}</td>
-            <td>${row["f(x)"]}</td>
-            <td>${row["f'(x)"]}</td>
-            <td>${row.next_x}</td>
-            <td>${row.error}</td>
+            <th>Iteration</th><th>x</th><th>f(x)</th><th>f'(x)</th><th>Next x</th><th>Error</th>
           </tr>
         `;
-      });
+
+        result.iterations.forEach(row => {
+          table.innerHTML += `
+            <tr>
+              <td>${row.iteration}</td>
+              <td>${row.x}</td>
+              <td>${row["f(x)"]}</td>
+              <td>${row["f'(x)"]}</td>
+              <td>${row.next_x}</td>
+              <td>${row.error}</td>
+            </tr>
+          `;
+        });
+      } catch (error) {
+        document.getElementById('result').innerText = "❌ Error: Unable to connect to the server. Please check your connection or try again later.";
+        document.getElementById('table').innerHTML = '';
+      }
     }
   </script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
