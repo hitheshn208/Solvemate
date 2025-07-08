@@ -1,0 +1,61 @@
+
+
+
+
+.navigation{
+    position: fixed;
+    height: 4rem;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 1); 
+    top: 0px;
+    left: 0px;
+    backdrop-filter: blur(10px);
+    z-index: 2;
+    transform: translateY(0px);
+    transition: 0.3s linear;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-hidden {
+  transform: translateY(-100px);
+}
+
+.navigation .symbols{
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    height: inherit;
+    align-items: center;
+}
+
+.navigation img{
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+.navigation .navname{
+    color: white;
+    font-size:2rem;
+    font-family: "Zilla Slab", sans-serif !important; 
+     font-weight: 500;
+} 
+
+.home a{
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: "Zilla Slab", sans-serif;
+    text-decoration: none;
+}
+
+.home{
+    padding-right: 3rem;
+}
+
+.home:hover{
+    text-decoration: underline solid 1px;
+    text-shadow: white 0px 0px 10px;
+}

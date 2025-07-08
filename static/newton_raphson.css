@@ -15,65 +15,6 @@ body{
 }
 
 
-.navigation{
-    position: fixed;
-    height: 4rem;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 1); 
-    top: 0px;
-    left: 0px;
-    backdrop-filter: blur(10px);
-    z-index: 2;
-    transform: translateY(0px);
-    transition: 0.3s linear;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.nav-hidden {
-  transform: translateY(-100px);
-}
-
-.navigation .symbols{
-    display: flex;
-    flex-direction: row;
-    width: fit-content;
-    height: inherit;
-    align-items: center;
-}
-
-.navigation img{
-    width: 3.5rem;
-    height: 3.5rem;
-}
-
-.navigation .navname{
-    color: white;
-    font-size:2rem;
-    font-family: "Zilla Slab", sans-serif !important; 
-     font-weight: 500;
-} 
-
-.home a{
-    color: white;
-    text-align: center;
-    font-size: 1.2rem;
-    font-family: "Zilla Slab", sans-serif;
-    text-decoration: none;
-}
-
-.home{
-    padding-right: 3rem;
-}
-
-.home:hover{
-    text-decoration: underline solid 1px;
-    text-shadow: white 0px 0px 10px;
-}
-
-
 .main{
      display: flex;
     flex-direction: column;
@@ -116,25 +57,44 @@ body{
     align-items: center;
     justify-content: space-between;
 }
-.form button{
+
+
+.form .buttons{
+    display: flex;
+    width:60%;
+    justify-content: space-evenly;
+    height:4rem;
+    justify-self:flex-end;
+    align-items: center;
+}
+
+.form .buttons button{
     border:none;
     color: white;
     cursor: pointer;
     background-color: #3a77db;
     border: 0.125rem solid #3a77db;
-    padding: 0.5rem;
+    text-align: center;
     height: 2rem;
     border-radius: 0.7rem;
+    transition: 0.2s;
     margin:1rem;
-    transition: transform 0.5s
+    font-size: medium;
+    width: fit-content;
+    margin:0px;
 }
-.form .btn:hover{
+
+.form .buttons .btn2{
+    width:4.67375rem;
+}
+.form .buttons button:hover{
     transform: scale(1.1);
 }
-.form .btn:active{
+.form .buttons button:active{
     background-color: white;
     color:#3a77db;
 }
+
 
 .input_ele{
     padding:10px;
@@ -191,16 +151,6 @@ th{
     background-color: #3a77db;
     color:white;
 }
-
-.footer{
-    width: 100%;
-    height: fit-content;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    justify-self: flex-end;
-    margin-top: 2rem;
-}
-
 .fortable{
     height:fit-content;
     width:100%;
