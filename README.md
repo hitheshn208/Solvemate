@@ -9,6 +9,7 @@
 - 🔢 Supports multiple numerical methods
   - Newton-Raphson Method
   - Taylor Series Expansion
+  - Euler's Method
   - And more coming soon!
 - 📈 Interactive graph plotting using JavaScript
 - 📄 Displays detailed iteration steps and results (up to 5 decimal places)
