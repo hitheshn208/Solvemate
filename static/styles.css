@@ -191,11 +191,12 @@ body{
 
 
 .heading{
-    font-family: 'KaTeX_Math';
+    font-family:'Times New Roman', Times, serif;
     font-style: italic;
     font-size : 2rem;
     margin: 1rem;
     font-weight: 600;
+    text-decoration: underline solid black;
 }
 
 .container{
@@ -231,12 +232,11 @@ body{
 
 .cards h4{
     margin: 0;
-    font-size: 2rem;
-    font-family: 'KaTeX_Math';
+    font-family:'KaTeX_Math','Times New Roman', Times, serif;
     font-style: italic;
-    font-weight: 300;
+    font-weight: 500;
     margin-left:0.5rem;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-top: 0.5rem;
     text-wrap: wrap;
     overflow: hidden;
