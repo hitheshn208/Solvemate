@@ -42,20 +42,32 @@
     cursor: pointer;
 } 
 
+.home{
+    padding-right: 3rem;
+    display:flex;
+    gap:0.2rem;
+    opacity:0.7;
+    cursor: pointer;
+}
+
 .home a{
     color: white;
     text-align: center;
     font-size: 1.2rem;
     font-family: "Zilla Slab", sans-serif;
     text-decoration: none; 
-    cursor: pointer;
+        padding-top: 0.16rem;
 }
 
-.home{
-    padding-right: 3rem;
+.home span{
+    /* height:1.5rem;
+    width: 1.5rem; */
+    font-size: 1.5rem;
+    color: white;
+    padding-bottom: 0.5rem;
 }
 
 .home:hover{
     text-decoration: underline solid 1px;
-    text-shadow: white 0px 0px 10px;
+    opacity:1;
 }

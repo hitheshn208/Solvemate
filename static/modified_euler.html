@@ -9,16 +9,19 @@
   <link rel="stylesheet" href="/static/footerforsubpages.css">
    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <title>Modified Euler's Method</title>
-  </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=home" />
+
 </head>
 <body>
-  <div class="navigation"  id="navbar">
+
+ <div class="navigation" id="navbar">
         <div class="symbols">
-        <img src="/static/solvemate symbol.png" alt="Sorry:)">
+        <img src="/static/solvemate symbol.png" alt="">
         <span class="navname">SolveMate</span>
         </div>
-        <div class="home"><a href="/static/index.html">HOME</a></div>
+        <div class="home"><span class="material-symbols-outlined">home</span><a href="/static/index.html">HOME</a></div>
     </div>
+
   <div class="main">
     <div class="form">
       <div id="heading">
@@ -28,13 +31,13 @@
         <label>Enter the differential equation:</label>
         <input type="text" id="function" placeholder="dy/dx = f(x, y)">
         <label>Enter the value of x₀: </label>
-        <input type="number" id="x0" value="0" step="any">
+        <input type="number" id="x0"  step="any">
         <label>Enter the value of y₀: </label>
-        <input type="number" id="y0" value="0" step="any">
+        <input type="number" id="y0"  step="any">
         <label>Enter the Target x: </label>
-        <input type="number" id="xTarget" value="0.2" step="any">
+        <input type="number" id="xTarget" step="any">
         <label>Enter Step size (h):</label>
-        <input type="number" id="step" value="0.1" step="any">
+        <input type="number" id="step" step="any">
       </div>
       <div class="buttons">
         <button class="btn1" onclick="calculateModifiedEuler()">Calculate</button>
