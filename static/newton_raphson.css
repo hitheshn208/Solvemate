@@ -43,7 +43,7 @@ body{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background-color: rgba(210, 105, 30,0.1);
-
+    cursor: default;
 }
 .form{
     border:2px solid black;
@@ -180,6 +180,7 @@ th{
     padding-top: 0.5rem;
     font-weight: 700;
     justify-self: flex-start;
+    cursor: default;
 }
 
 #result{

@@ -10,9 +10,11 @@
     flex-direction: column;
     justify-content: flex-end;
     padding:0;
+    padding-bottom: 0.25rem;
 }
 
 .footer p{
     padding-left: 0.5rem;
+    cursor: default;
 }
 /* <div class="footer"><p>© 2025 Solvemate</p></div>   Html code to be included*/

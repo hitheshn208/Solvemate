@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/static/solvemate symbol.png">
-  <link rel="stylesheet" href="navbarforsubpages.css">
-  <link rel="stylesheet" href="modified_euler.css">
-  <link rel="stylesheet" href="footerforsubpages.css">
+  <link rel="stylesheet" href="/static/navbarforsubpages.css ">
+  <link rel="stylesheet" href="/static/modified_euler.css">
+  <link rel="stylesheet" href="/static/footerforsubpages.css">
    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <title>Modified Euler's Method</title>
   </style>
@@ -41,91 +41,110 @@
         <button class="btn2" onclick="resetForm()">Reset</button>
       </div>
     </div>
+  </div>
+    
     <div class="results">
-      <div id="result"> <b>Result:</b></div>
-      <div id="error" class="error"><b>Error:</b></div>
-    </div>
-    <div class="table" id="table-container"></div>
-    </div>
+      <p>Result :</p>
+  <div id="result"></div>
+</div>
+<div class="table" id="table-container"></div>
+
   <div class="footer">
     <p>© 2025 Solvemate</p>
   </div>
 
-  <script>
-    async function calculateModifiedEuler() {
-      const func = document.getElementById("function").value;
-      const x0 = parseFloat(document.getElementById("x0").value);
-      const y0 = parseFloat(document.getElementById("y0").value);
-      const xTarget = parseFloat(document.getElementById("xTarget").value);
-      const h = parseFloat(document.getElementById("step").value);
+ <script>
+  async function calculateModifiedEuler() {
+    const func = document.getElementById("function").value;
+    const x0 = parseFloat(document.getElementById("x0").value);
+    const y0 = parseFloat(document.getElementById("y0").value);
+    const xTarget = parseFloat(document.getElementById("xTarget").value);
+    const h = parseFloat(document.getElementById("step").value);
 
-      const resultDiv = document.getElementById("result");
-      const errorDiv = document.getElementById("error");
-      const tableDiv = document.getElementById("table-container");
-      resultDiv.innerText = "";
-      errorDiv.innerText = "";
-      tableDiv.innerHTML = "";
+    const resultDiv = document.getElementById("result");
+    const tableDiv = document.getElementById("table-container");
+    resultDiv.innerText = "";
+    tableDiv.innerHTML = "";
 
-      const data = { function: func, x0, y0, x_target: xTarget, h };
+    const data = { function: func, x0, y0, x_target: xTarget, h };
 
-      try {
-        const res = await fetch("http://127.0.0.1:8000/modified_euler", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
+    // http://127.0.0.1:8000
 
-        const result = await res.json();
+    try {
+      const res = await fetch("/modified_euler", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
 
-        if (result.error) {
-          errorDiv.innerText = result.error;
-          return;
-        }
+      const result = await res.json();
 
-        resultDiv.innerText = `✅ Final y(${xTarget}) ≈ ${result.result}`;
-
-        let table = `<table>
-          <tr>
-            <th>Step</th>
-            <th>xₙ</th>
-            <th>yₙ</th>
-            <th>y<sub>predict</sub></th>
-            <th>f(xₙ, yₙ)</th>
-            <th>f(xₙ₊₁, y<sub>predict</sub>)</th>
-            <th>✅ y<sub>final</sub></th>
-          </tr>`;
-
-        result.steps.forEach((step) => {
-          table += `<tr>
-            <td>${step.step}</td>
-            <td>${step.x}</td>
-            <td>${step.y_n}</td>
-            <td>${step.y_predict}</td>
-            <td>${step.f1}</td>
-            <td>${step.f2}</td>
-            <td>${step.y_final}</td>
-          </tr>`;
-        });
-
-        table += `</table>`;
-        tableDiv.innerHTML = table;
-
-      } catch (err) {
-        errorDiv.innerText = " Error fetching API";
+      if (result.error) {
+        resultDiv.innerText = result.error;
+        return;
       }
-    }
 
-    function resetForm() {
-      document.getElementById("function").value = "";
-      document.getElementById("x0").value = "";
-      document.getElementById("y0").value = "";
-      document.getElementById("xTarget").value = "";
-      document.getElementById("step").value = "";
-      document.getElementById("result").innerText = "";
-      document.getElementById("error").innerText = "";
-      document.getElementById("table-container").innerHTML = "";
+      resultDiv.innerText = `Final y(${xTarget}) ≈ ${result.result}`;
+
+      let table = `<table>
+        <tr>
+          <th>Step</th>
+          <th>xₙ</th>
+          <th>yₙ</th>
+          <th>y<sub>predict</sub></th>
+          <th>f(xₙ, yₙ)</th>
+          <th>f(xₙ₊₁, y<sub>predict</sub>)</th>
+          <th> y<sub>final</sub></th>
+        </tr>`;
+
+      result.steps.forEach((step) => {
+        table += `<tr>
+          <td>${step.step}</td>
+          <td>${step.x}</td>
+          <td>${step.y_n}</td>
+          <td>${step.y_predict}</td>
+          <td>${step.f1}</td>
+          <td>${step.f2}</td>
+          <td>${step.y_final}</td>
+        </tr>`;
+      });
+
+      table += `</table>`;
+      tableDiv.innerHTML = table;
+
+    } catch (err) {
+      resultDiv.innerText = "Error! Check the Input!!";
     }
-  </script>
+  }
+
+  function resetForm() {
+    document.getElementById("function").value = "";
+    document.getElementById("x0").value = "";
+    document.getElementById("y0").value = "";
+    document.getElementById("xTarget").value = "";
+    document.getElementById("step").value = "";
+    document.getElementById("result").innerText = "";
+    document.getElementById("table-container").innerHTML = "";
+  }
+  const navbar = document.getElementById('navbar');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  const currentScrollY = window.scrollY;
+
+  if (currentScrollY > lastScrollY) {
+    // Scrolling down → hide navbar
+    navbar.classList.add('nav-hidden');
+  } else {
+    // Scrolling up → show navbar
+    navbar.classList.remove('nav-hidden');
+  }
+
+  lastScrollY = currentScrollY;
+});
+
+</script>
+
 </body>
 </html>
 
