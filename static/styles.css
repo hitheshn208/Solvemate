@@ -18,10 +18,13 @@ body{
     z-index: 2;
     transform: translateY(0px);
     transition: 0.3s linear;
-    cursor: pointer;
+    /* cursor: pointer; */
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.navbaroptions span{
+    cursor:pointer;
 }
 
 .nav-hidden {
@@ -102,6 +105,9 @@ body{
     transition: 0ms;
     animation: rot 1s linear normal;
     
+}
+.explorenow{
+    cursor:pointer;
 }
 
 @keyframes rot{
