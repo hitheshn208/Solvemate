@@ -31,7 +31,7 @@
 .navigation img{
     width: 3.5rem;
     height: 3.5rem;
-     cursor: pointer;
+     cursor: default;
 }
 
 .navigation .navname{
@@ -39,7 +39,7 @@
     font-size:2rem;
     font-family: "Zilla Slab", sans-serif !important; 
      font-weight: 500;
-    cursor: pointer;
+    cursor: default;
 } 
 
 .home{
@@ -56,7 +56,7 @@
     font-size: 1.2rem;
     font-family: "Zilla Slab", sans-serif;
     text-decoration: none; 
-        padding-top: 0.16rem;
+    padding-top: 0.16rem;
 }
 
 .home span{
