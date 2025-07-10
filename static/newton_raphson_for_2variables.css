@@ -39,6 +39,7 @@ h1{
     flex-direction: column;
     justify-content: center;
     margin-bottom:2rem;
+    cursor: default;
 }
 
 .form{
@@ -171,6 +172,7 @@ th{
     padding-top: 0.5rem;
     font-weight: 700;
     justify-self: flex-start;
+    cursor: default;
 }
 
 #result{

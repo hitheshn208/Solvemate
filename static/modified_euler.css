@@ -2,10 +2,12 @@
     margin:0;
     font-family: 'Segoe UI', sans-serif;
 }
+
+
 body{
-    min-height: 100vh;
     padding-top: 5rem;
     height:fit-content;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     margin:0;
@@ -143,7 +145,7 @@ th{
 }
 .results{
     margin-top: 2rem;
-    padding:0.5rem;
+    /* padding:0.5rem; */
     width:67rem;
     height:fit-content;
     display: flex;
@@ -153,4 +155,24 @@ th{
     border-top-left-radius: 1rem; 
     border: 2px solid rgb(200, 170, 0);
     min-height: 6rem;
+}
+
+.results p{
+    background-color: rgb(255, 227, 175);
+    margin:0px;
+    height: 2rem;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem; 
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    font-weight: 700;
+    cursor: default;
+}
+
+
+#result{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

@@ -2,6 +2,7 @@
     margin:0;
     font-family: 'Segoe UI', sans-serif;
 }
+
 body{
     min-height: 100vh;
     padding-top: 5rem;
@@ -54,6 +55,7 @@ h1{
     flex-direction: column;
     justify-content: center;
     margin-bottom:2rem;
+    cursor: default;
 }
 .form{
     border:2px solid black;
@@ -172,7 +174,7 @@ th{
     padding-left: 1rem;
     padding-top: 0.5rem;
     font-weight: 700;
-    
+    cursor: default; 
 }
 
 .ans{

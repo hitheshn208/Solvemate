@@ -3,19 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>Taylor Series Calculator</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="/static/taylor_series.css">
     <link rel="stylesheet" href="taylor_series.css">
     <link rel="icon" href="/static/ symbol.png">
     <link rel="icon" href="solvemate symbol.png">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.3.1/math.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/footerforsubpages.css">
 
+    <!-- ✅ Updated Plotly version -->
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js" defer></script>
 
+<!-- ✅ Working polyfill -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.3.1/math.min.js"></script>
+
+  <script>
+window.onload = function () {
+  window.plotTaylorGraph = function (funcStr, taylorList) {
+    const xVals = math.range(-10, 10.1, 0.1).toArray();
+    const scope = { x: 0 };
+
+    const fNode = math.parse(funcStr.replace(/\*\*/g, '^')).compile();
+    const yOriginal = xVals.map(val => {
+      scope.x = val;
+      try { return fNode.evaluate(scope); } catch { return null; }
+    });
+
+    const traces = [{
+      x: xVals,
+      y: yOriginal,
+      mode: 'lines',
+      name: 'Original f(x)',
+      line: { color: 'blue' }
+    }];
+
+    taylorList.forEach((expr, i) => {
+      try {
+        const compiled = math.parse(expr.replace(/\*\*/g, '^')).compile();
+        const yTaylor = xVals.map(val => {
+          scope.x = val;
+          return compiled.evaluate(scope);
+        });
+
+        traces.push({
+          x: xVals,
+          y: yTaylor,
+          mode: 'lines',
+          name: `Order ${i + 1}`,
+          line: { dash: 'dot' }
+        });
+      } catch (e) {
+        console.log(`Error parsing Taylor order ${i + 1}`);
+      }
+    });
+
+    Plotly.newPlot('plot', traces, {
+      title: 'Taylor Series Approximation',
+      xaxis: { title: 'x', dtick: 1, range: [-10, 10] },
+      yaxis: { title: 'f(x)', dtick: 1, range: [-2, 2] },
+      legend: { x: 1, y: 1 }
+    });
+  };
+};
+  </script>
+   
 </head>
 <body>
     <div class="navigation" id="navbar">
@@ -72,69 +127,6 @@
 
 
 <script>
-  function plotTaylorGraph(funcStr, taylorList) {
-
-    const xVals = math.range(-10, 10.1, 0.1).toArray(); // fixed range
-
-
-    const scope = { x: 0 };
-
-    // Compile original function
-    const fNode = math.parse(funcStr.replace(/\*\*/g, '^')).compile();
-    const yOriginal = xVals.map(val => {
-      scope.x = val;
-      try { return fNode.evaluate(scope); } catch { return null; }
-    });
-
-    const traces = [{
-      x: xVals,
-      y: yOriginal,
-      mode: 'lines',
-      name: 'Original f(x)',
-      line: { color: 'blue' }
-    }];
-
-    // Plot up to 5 Taylor approximations
-    taylorList.forEach((expr, i) => {
-      try {
-        const compiled = math.parse(expr.replace(/\*\*/g, '^')).compile();
-        const yTaylor = xVals.map(val => {
-          scope.x = val;
-          return compiled.evaluate(scope);
-        });
-
-        traces.push({
-          x: xVals,
-          y: yTaylor,
-          mode: 'lines',
-          name: `Order ${i + 1}`,
-          line: { dash: 'dot' }
-        });
-      } catch (e) {
-        console.log(`Error parsing Taylor order ${i + 1}`);
-      }
-    });
-
-    Plotly.newPlot('plot', traces, {
-  title: 'Taylor Series Approximation',
-  xaxis: {
-    title: 'x',
-    dtick: 1,
-    range: [-10, 10]
-  },
-  yaxis: {
-    title: 'f(x)',
-    dtick: 1,
-    range: [-2, 2]  // customize for zoom
-  },
-  legend: {
-    x: 1,
-    y: 1
-  }
-});
-
-
-  }
 
   async function calculateTaylor() {
     const functionInput = document.getElementById('functionInput').value;
@@ -179,6 +171,7 @@
     }
   }
 
+
   function resetTaylor() {
     document.getElementById('functionInput').value = '';
     document.getElementById('x0Input').value = '';
@@ -189,10 +182,7 @@
     document.getElementById('plot').innerHTML = '';
   }
 
-
-
-
-  const navbar = document.getElementById('navbar');
+const navbar = document.getElementById('navbar');
 let lastScrollY = window.scrollY;
 
 window.addEventListener('scroll', () => {
