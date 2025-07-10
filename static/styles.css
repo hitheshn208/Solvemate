@@ -106,7 +106,7 @@ body{
     animation: rot 1s linear normal;
     
 }
-.explorenow{
+.explr{
     cursor:pointer;
 }
 
@@ -167,8 +167,12 @@ body{
     }
 }
 
-.explorenow{
+.explr{
+    display:flex;
+    justify-content: center;
+    align-items: center;
     width: 11rem;
+    text-align: center;
     height: 2.5rem;
     font-size: 1rem;
     font-weight: 500;
@@ -179,14 +183,12 @@ body{
     border: solid 2px white;
     animation: fronttextani 0.8s ease-out 1 normal ;
     opacity: 0.8;
-}
-
-.explorenow a{
     text-decoration: none;
-     color: white;
+    border-radius: 6px;
 }
 
-.explorenow:hover{
+
+.explr:hover{
    opacity: 1;
 }
 
