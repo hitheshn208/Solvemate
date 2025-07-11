@@ -1,0 +1,132 @@
+*{
+    font-family: 'Segoe UI', sans-serif;
+}
+body{
+    min-height: 100vh;
+    height:fit-content;
+    background-color: #FAF3E7;
+    padding-top:5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin:0;
+}
+.main{
+     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height:90%;
+    margin:0;
+
+}
+
+h1{
+    margin:0px;
+    height:fit-content;
+}
+
+#heading{
+    margin:0;
+    width:100%;
+    height:4rem;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: rgba(210, 105, 30,0.1);
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom:2rem;
+    cursor: default;
+}
+
+.form{
+    border:2px solid black;
+    background-color: #FDF0D8;
+    border-radius: 10px;
+    border-color: rgb(200, 170, 0);
+    height:fit-content;
+    width:42rem;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form .buttons{
+    display: flex;
+    width:60%;
+    justify-content: space-evenly;
+    height:4rem;
+    justify-self:flex-end;
+    align-items: center;
+}
+
+.form .buttons button{
+    border:none;
+    color: white;
+    cursor: pointer;
+    background-color: #3a77db;
+    border: 0.125rem solid #3a77db;
+    text-align: center;
+    height: 2rem;
+    border-radius: 0.7rem;
+    transition: 0.2s;
+    margin:1rem;
+    font-size: medium;
+    width: fit-content;
+    margin:0px;
+}
+
+.form .buttons .btn2{
+    width:4.67375rem;
+}
+.form .buttons button:hover{
+    transform: scale(1.1);
+}
+.form .buttons button:active{
+    background-color: white;
+    color:#3a77db;
+}
+
+.input_ele{
+    padding:10px;
+    height:25%;
+    width:70%;
+    grid-gap: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+.input_ele input{
+    outline: none;
+    border:none;
+    border-radius: 5px;
+    height:2rem;
+}
+.input_ele input:hover{
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.input_ele input:focus{
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom:2px solid #3a77db;
+}
+.results{
+    padding-left:1rem ;
+    margin-top: 2rem;
+    width:67rem;
+    height:fit-content;
+    min-height: 20%;
+    display: flex;
+    flex-direction: column;
+    border:2px solid rgb(200, 170, 0);
+    border-radius: 0.5rem;
+    background-color: #FDF0D8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
