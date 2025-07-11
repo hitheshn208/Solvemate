@@ -256,7 +256,7 @@ body{
     text-align: end;
     background-color: aliceblue;
     border-radius: 0px 0px 1rem 1rem;
-    background-color: rgb(255, 227, 175);
+    background-color: rgba(255, 227, 175,0.95);
     text-decoration: none;
     font-size: 1rem;
     /* font-weight: 900; */
