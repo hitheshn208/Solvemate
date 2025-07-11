@@ -6,6 +6,7 @@
   <title>Euler's Method</title>
   <link rel="stylesheet" href="Euler.css">
   <link rel="icon" href="/static/solvemate symbol.png">
+  <link rel="stylesheet" href="/static/loadingbox.css">
   <link rel="stylesheet" href="/static/footerforsubpages.css">
   <link rel="stylesheet" href="/static/navbarforsubpages.css">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -53,8 +54,24 @@
 
   <div class="footer"><p>© 2025 Solvemate</p></div>
 
+  <div id="loadingBox">
+    <div class="loading">
+       <div class="ui-loader loader-blk">
+        <svg viewBox="22 22 44 44" class="multiColor-loader">
+             <circle cx="44" cy="44" r="20.2" fill="none" stroke-width="3.6" class="loader-circle loader-circle-animation"></circle>
+        </svg>
+    </div>
+    <p>Calculating...</p>
+</div>
+</div>
+
   <script>
     async function calculateEuler() {
+      const loadingBox = document.getElementById("loadingBox");
+    loadingBox.classList.add("show");
+    await new Promise(resolve => setTimeout(resolve, 500));  // smoother
+
+
       const func = document.getElementById("function").value;
       const x0 = parseFloat(document.getElementById("x0").value);
       const y0 = parseFloat(document.getElementById("y0").value);
@@ -74,6 +91,7 @@
         x_target: xTarget,
         h: h
       };
+// http://127.0.0.1:8000
 
       try {
         const res = await fetch("/euler", {
@@ -104,6 +122,10 @@
       } catch (err) {
         resultDiv.innerText = " Error! Check your input!!";
       }
+      finally {
+    loadingBox.classList.remove("show");
+  }
+  
     }
 
     function resetEuler() {

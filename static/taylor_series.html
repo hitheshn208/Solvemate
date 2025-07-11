@@ -136,8 +136,6 @@ window.onload = function () {
   async function calculateTaylor() {
     const loadingBox = document.getElementById("loadingBox");
     loadingBox.classList.add("show");
-
-
     await new Promise(resolve => setTimeout(resolve, 500));  // smoother
 
     const functionInput = document.getElementById('functionInput').value;

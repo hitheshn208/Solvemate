@@ -9,10 +9,17 @@
   <link rel="stylesheet" href="/static/newton_raphson.css">
   <link rel="stylesheet" href="/static/footerforsubpages.css">
   <link rel="stylesheet" href="/static/navbarforsubpages.css">
+  <link rel="stylesheet" href="/static/loadingbox.css">
 
 
   <script>
     async function calculateNR() {
+      const loadingBox = document.getElementById("loadingBox");
+    loadingBox.classList.add("show");
+
+    await new Promise(resolve => setTimeout(resolve, 500));  // 0.5s of loading
+
+
       const func = document.getElementById('functionInput').value;
       const x0 = parseFloat(document.getElementById('x0Input').value);
 
@@ -62,7 +69,9 @@
       } catch (error) {
         document.getElementById('result').innerText = " Error! Check your input!";
         document.getElementById('table').innerHTML = '';
-      }
+      }finally {
+    loadingBox.classList.remove("show");
+  }
     }
     
     function resetForm() {
@@ -121,7 +130,16 @@
   
 
   <div class="footer"><p>© 2025 Solvemate</p></div>  
-
+<div id="loadingBox">
+    <div class="loading">
+       <div class="ui-loader loader-blk">
+        <svg viewBox="22 22 44 44" class="multiColor-loader">
+             <circle cx="44" cy="44" r="20.2" fill="none" stroke-width="3.6" class="loader-circle loader-circle-animation"></circle>
+        </svg>
+    </div>
+    <p>Calculating...</p>
+</div>
+</div>
 
 
 </body>
