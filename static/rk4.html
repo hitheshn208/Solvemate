@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Runge-Kutta Method</title>
+
+  <style>
+    body { font-family: Arial; padding: 20px; background: #121212; color: white; }
+    table, th, td { border: 1px solid white; border-collapse: collapse; padding: 8px; text-align: center; }
+    th { background-color: #222; }
+    .error { color: red; font-weight: bold; }
+  </style>
+
+</head>
+<body>
+  <h2>🔢 Runge-Kutta 4th Order Method</h2>
+
+  <label>dy/dx =</label>
+  <input type="text" id="func" placeholder="e.g., x + y"><br><br>
+
+  <label>x₀:</label>
+  <input type="text" id="x0" value="0">
+  <label>y₀:</label>
+  <input type="text" id="y0" value="1"><br><br>
+
+  <label>Step size h:</label>
+  <input type="text" id="h" value="0.1">
+  <label>Final x (xₙ):</label>
+  <input type="text" id="xn" value="0.3"><br><br>
+
+  <button onclick="calculateRK4()">Calculate</button>
+  <p id="error" class="error"></p>
+
+  <div id="output"></div>
+
+  <script>
+    async function calculateRK4() {
+      const func = document.getElementById('func').value;
+      const x0 = document.getElementById('x0').value;
+      const y0 = document.getElementById('y0').value;
+      const h = parseFloat(document.getElementById('h').value);
+      const xn = parseFloat(document.getElementById('xn').value);
+      const output = document.getElementById('output');
+      const error = document.getElementById('error');
+      output.innerHTML = '';
+      error.textContent = '';
+
+      const data = { function: func, x0, y0, h, xn };
+
+// http://127.0.0.1:8000/rk4
+
+      try {
+        const res = await fetch("http://127.0.0.1:8000/rk4", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        if (result.error) {
+          error.textContent = result.error;
+          return;
+        }
+
+        const steps = result.steps;
+        let table = `<h3>✅ RK4 Result Table</h3><table>
+          <tr><th>Step</th><th>xₙ</th><th>yₙ</th><th>k₁</th><th>k₂</th><th>k₃</th><th>k₄</th><th>yₙ₊₁</th></tr>`;
+
+        steps.forEach(row => {
+          table += `<tr>
+            <td>${row.step}</td>
+            <td>${row.x}</td>
+            <td>${row.y}</td>
+            <td>${row.k1}</td>
+            <td>${row.k2}</td>
+            <td>${row.k3}</td>
+            <td>${row.k4}</td>
+            <td>${row.yn1}</td>
+          </tr>`;
+        });
+
+        table += `</table>`;
+        output.innerHTML = table;
+        output.innerHTML += `<br><h3>✅ Final Answer:</h3>
+        <p>y(${xn}) = <b>${result.final_y}</b></p>`;
+
+
+      } catch (err) {
+        error.textContent = 'Error connecting to the backend.';
+      }
+    }
+  </script>
+</body>
+</html>

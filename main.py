@@ -8,6 +8,8 @@ from newton_raphson_2_var import router as newton2_router
 from taylor2 import router as taylor2_router
 from euler import router as euler_router
 from modified_euler import router as modified_euler_router
+from rk4 import router as rk4_router
+
 
 
 
@@ -50,3 +52,6 @@ app.include_router(euler_router)
 
 # Include Modified Euler method API router
 app.include_router(modified_euler_router)
+
+# Include Runge-Kutta method API router
+app.include_router(rk4_router)
