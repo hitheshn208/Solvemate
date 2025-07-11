@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="/static/taylor_series.css">
+    <link rel="stylesheet" href="/static/loadingbox.css">
     <link rel="icon" href="/static/ symbol.png">
     <link rel="icon" href="solvemate symbol.png">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -73,6 +74,8 @@ window.onload = function () {
   </script>
    
 </head>
+
+
 <body>
     <div class="navigation" id="navbar">
         <div class="symbols">
@@ -105,6 +108,8 @@ window.onload = function () {
         
     </div>
 
+    
+
         <div class="displayres">
             <div class="resultdis">
                     <p>Approximated Value:</p> 
@@ -122,14 +127,19 @@ window.onload = function () {
         </div>
 
 
-<div class="footer"><p>© 2025 Solvemate</p></div>   
-  
+<div class="footer"><p>© 2025 Solvemate</p></div>  
 
 
 
 <script>
 
   async function calculateTaylor() {
+    const loadingBox = document.getElementById("loadingBox");
+    loadingBox.classList.add("show");
+
+
+    await new Promise(resolve => setTimeout(resolve, 500));  // smoother
+
     const functionInput = document.getElementById('functionInput').value;
     const x0 = document.getElementById('x0Input').value;
     const x = document.getElementById('xInput').value;
@@ -170,6 +180,10 @@ window.onload = function () {
       seriesDisplay.innerText = '';
       document.getElementById('plot').innerHTML = '';
     }
+    
+    finally {
+    loadingBox.classList.remove("show");
+  }
   }
 
 
@@ -202,6 +216,16 @@ window.addEventListener('scroll', () => {
 
 </script>
 
+<div id="loadingBox">
+    <div class="loading">
+       <div class="ui-loader loader-blk">
+        <svg viewBox="22 22 44 44" class="multiColor-loader">
+             <circle cx="44" cy="44" r="20.2" fill="none" stroke-width="3.6" class="loader-circle loader-circle-animation"></circle>
+        </svg>
+    </div>
+    <p>Calculating...</p>
+</div>
+</div>
 
 </body>
 </html>
