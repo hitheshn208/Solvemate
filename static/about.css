@@ -1,0 +1,68 @@
+body{
+    background-image: url("/static/about_us_image.jpeg");
+    color:white;
+    display:flex;
+    flex-direction: column;
+    padding-top:10rem;
+    gap:2rem;
+}
+.heading {
+    font-size: 5.4rem;
+    letter-spacing: 0.2rem;
+    font-family: 'Segoe UI', sans-serif;
+    height:fit-content;
+    margin-left:25vh;
+
+}
+.bar{
+    height:115.2px;
+    width:0.5rem;
+    background-color: white;
+    display: inline-block;
+    margin-right: 1rem;
+    display: none;
+}
+.description{
+    margin-left:60vh;
+    font-size: medium;
+    width: 48.5rem;
+    height:fit-content;
+    font-family: 'Segoe UI', sans-serif;
+    text-wrap:initial;
+}
+.developers h3{
+    font-size: xx-large;
+    font-family: 'Segoe UI', sans-serif;
+    font-style: italic;
+    text-align: center;
+
+}
+.developers{
+    margin-top:15vh;
+    font-family: 'Segoe UI', sans-serif;
+}
+.container{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap:2rem;
+
+
+}
+.card{
+    height: 10rem;
+    width:22rem;
+    border: 2px solid white;
+    transition: 0.2s linear;
+    border-radius:1rem;
+    padding: 0.5rem;
+}
+
+h4{
+    font-size: larger;
+}
+
+.card:hover{
+    transform: scale(1.05);
+}

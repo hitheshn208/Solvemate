@@ -88,7 +88,7 @@
   const data = { function: func, x0, y0, h, xn };
 
   try {
-    const res = await fetch("http://127.0.0.1:8000/rk4", {
+    const res = await fetch("/rk4", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -138,7 +138,7 @@ table += `</table>`;
 tableContainer.innerHTML = table;
 
   } catch (err) {
-    output.innerHTML = `<span class="error">Error connecting to the backend.</span>`;
+    output.innerHTML = `<span class="error">Error!!! Check your input</span>`;
   } finally {
     loadingBox.classList.remove("show");
   }
