@@ -8,14 +8,13 @@
   <link rel="stylesheet" href="/static/navbarforsubpages.css ">
   <link rel="stylesheet" href="/static/rk4.css">
   <link rel="stylesheet" href="/static/footerforsubpages.css">
+  <link rel="stylesheet" href="/static/loadingbox.css">
    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <title>Modified Euler's Method</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=home" />
   <link rel="stylesheet" href="/static/loadingbox.css">
-
-
-
 </head>
+
 <body>
    <div class="navigation" id="navbar">
         <div class="symbols">
@@ -27,11 +26,11 @@
     <div class="main">
       <div class="form">
         <div id="heading">
-          <h2>Runge-Kutta 4th Order Method</h2>
+          <h1>Runge-Kutta 4th Order Method</h1>
         </div>
         <div class="input_ele">
           <label>Enter the function :</label>
-          <input type="text" id="func" placeholder="f(x,y)">
+          <input type="text" id="func" placeholder="dy/dx">
           <label>Enter the value x₀:</label>
           <input type="text" id="x0" placeholder="initial value of x">
           <label>Enter the value y₀:</label>
@@ -40,17 +39,23 @@
           <label>Enter the step size h:</label>
           <input type="text" id="h" placeholder="Step length">
           <label>Enter the Target (xₙ):</label>
-          <input type="text" id="xn" placeholder="Target value">
+          <input type="text" id="xn" placeholder="Final value">
         </div>
       <div class="buttons">
-        <button onclick="calculateRK4()">Calculate</button>
+        <button onclick="calculateRK4()" class="btn1">Calculate</button>
+        <button onclick="resetRK4()" class="btn2">Reset</button>
       </div>
     </div>
   </div>
+
+
     <div class="results">
-      <div id="output">Solution:</div>
-      <p id="error" class="error">Error:</p>
-   </div>
+      <p>Result :</p>
+      <div id="output"></div>
+     </div>
+     
+     <div class="table" id="rk4-table-container"></div>
+
     <div class="footer">
     <p>© 2025 Solvemate</p>
   </div>
@@ -67,61 +72,105 @@
 
   <script>
     async function calculateRK4() {
-      const func = document.getElementById('func').value;
-      const x0 = document.getElementById('x0').value;
-      const y0 = document.getElementById('y0').value;
-      const h = parseFloat(document.getElementById('h').value);
-      const xn = parseFloat(document.getElementById('xn').value);
-      const output = document.getElementById('output');
-      const error = document.getElementById('error');
-      output.innerHTML = '';
-      error.textContent = '';
+  const loadingBox = document.getElementById("loadingBox");
+  loadingBox.classList.add("show");
 
-      const data = { function: func, x0, y0, h, xn };
+  await new Promise(resolve => setTimeout(resolve, 500));  // 0.5s of loading
 
-// http://127.0.0.1:8000/rk4
+  const func = document.getElementById('func').value;
+  const x0 = document.getElementById('x0').value;
+  const y0 = document.getElementById('y0').value;
+  const h = parseFloat(document.getElementById('h').value);
+  const xn = parseFloat(document.getElementById('xn').value);
+  const output = document.getElementById('output');
+  output.innerHTML = '';
 
-      try {
-        const res = await fetch("http://127.0.0.1:8000/rk4", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
+  const data = { function: func, x0, y0, h, xn };
 
-        const result = await res.json();
+  try {
+    const res = await fetch("http://127.0.0.1:8000/rk4", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
 
-        if (result.error) {
-          error.textContent = result.error;
-          return;
-        }
+    const result = await res.json();
 
-        const steps = result.steps;
-        let table = `<h3>✅ RK4 Result Table</h3><table>
-          <tr><th>Step</th><th>xₙ</th><th>yₙ</th><th>k₁</th><th>k₂</th><th>k₃</th><th>k₄</th><th>yₙ₊₁</th></tr>`;
+    const output = document.getElementById("output");
+    const tableContainer = document.getElementById("rk4-table-container");
 
-        steps.forEach(row => {
-          table += `<tr>
-            <td>${row.step}</td>
-            <td>${row.x}</td>
-            <td>${row.y}</td>
-            <td>${row.k1}</td>
-            <td>${row.k2}</td>
-            <td>${row.k3}</td>
-            <td>${row.k4}</td>
-            <td>${row.yn1}</td>
-          </tr>`;
-        });
+    output.innerHTML = "";
+    tableContainer.innerHTML = "";
 
-        table += `</table>`;
-        output.innerHTML = table;
-        output.innerHTML += `<br><h3>✅ Final Answer:</h3>
-        <p>y(${xn}) = <b>${result.final_y}</b></p>`;
-
-
-      } catch (err) {
-        error.textContent = 'Error connecting to the backend.';
-      }
+    if (result.error) {
+      output.innerHTML = `<span class="error">${result.error}</span>`;
+      return;
     }
+
+    output.innerHTML = `Final y(${xn}) ≈ ${result.final_y}`;
+
+    let table = `<table>
+  <tr>
+    <th>Step</th>
+    <th>xₙ</th>
+    <th>yₙ</th>
+    <th>k₁</th>
+    <th>k₂</th>
+    <th>k₃</th>
+    <th>k₄</th>
+    <th>yₙ₊₁</th>
+  </tr>`;
+
+result.steps.forEach(row => {
+  table += `<tr>
+    <td>${row.step}</td>
+    <td>${row.x}</td>
+    <td>${row.y}</td>
+    <td>${row.k1}</td>
+    <td>${row.k2}</td>
+    <td>${row.k3}</td>
+    <td>${row.k4}</td>
+    <td>${row.yn1}</td>
+  </tr>`;
+});
+
+table += `</table>`;
+tableContainer.innerHTML = table;
+
+  } catch (err) {
+    output.innerHTML = `<span class="error">Error connecting to the backend.</span>`;
+  } finally {
+    loadingBox.classList.remove("show");
+  }
+}
+
+    const navbar = document.getElementById('navbar');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  const currentScrollY = window.scrollY;
+
+  if (currentScrollY > lastScrollY) {
+    // Scrolling down → hide navbar
+    navbar.classList.add('nav-hidden');
+  } else {
+    // Scrolling up → show navbar
+    navbar.classList.remove('nav-hidden');
+  }
+
+  lastScrollY = currentScrollY;
+});
+
+function resetRK4() {
+  document.getElementById("func").value = "";
+  document.getElementById("x0").value = "";
+  document.getElementById("y0").value = "";
+  document.getElementById("h").value = "";
+  document.getElementById("xn").value = "";
+  document.getElementById("output").innerHTML = "";
+  document.getElementById("rk4-table-container").innerHTML = "";
+}
+
   </script>
 </body>
 </html>

@@ -125,6 +125,10 @@ h1{
     border-bottom:2px solid #3a77db;
 }
 
+label{
+    font-weight: 500;
+}
+
 table{
     margin-top: 2rem;
     background-color:  #ffffff;

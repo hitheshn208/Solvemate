@@ -184,3 +184,6 @@ th{
     justify-content: center;
 }
 
+label{
+    font-weight: 500;
+}

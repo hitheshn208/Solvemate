@@ -115,6 +115,10 @@ h1{
     border-bottom:2px solid #3a77db;
 }
 
+label{
+    font-weight: 500;
+}
+
 .results #table{
     padding:5px;
 }
