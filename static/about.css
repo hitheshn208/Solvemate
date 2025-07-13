@@ -31,13 +31,14 @@ body{
     height:fit-content;
     font-family: 'Segoe UI', sans-serif;
     text-wrap:initial;
+    cursor: default;
 }
 .developers h3{
     font-size: xx-large;
     font-family: 'Segoe UI', sans-serif;
     font-style: italic;
     text-align: center;
-
+    cursor:default;
 }
 .developers{
     margin-top:15vh;
@@ -50,21 +51,46 @@ body{
     justify-content: center;
     gap:2rem;
 
-
 }
 .card{
-    height: 10rem;
+    min-height: 9.5rem;
+    height: fit-content;
     width:22rem;
     border: 2px solid white;
     transition: 0.2s linear;
     border-radius:1rem;
     padding: 0.5rem;
+    display:flex;
+    flex-direction: column;
+    gap:1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
 }
 
 h4{
-    font-size: larger;
+    font-size: x-large;
+    margin:0;
+    cursor:default;
 }
 
 .card:hover{
     transform: scale(1.05);
+}
+
+.card img{
+    height:1.2rem;
+    width:1.2rem;
+    margin-left: 1rem;
+}
+
+.card .contacts{
+    display:flex;
+    align-items: center;
+    margin:0;
+}
+
+.card p{
+    margin:0;
+    font-size: 0.85rem;
+    cursor: default;
 }
