@@ -12,33 +12,34 @@ class TaylorInput(BaseModel):
 
 @router.post("/taylor")
 def taylor_series(input_data: TaylorInput):
-    
     try:
         func_str = input_data.function
-        x0 = float(sp.sympify(input_data.initial_guess))  # ✅ fixed
-        x_val = float(sp.sympify(input_data.value))       # ✅ fixed
+        x0 = sp.sympify(input_data.initial_guess)  
+        x_val = sp.sympify(input_data.value)        
     except Exception:
         return {
-            "error": "❌ Invalid input for initial guess or value. Use numbers like pi/2 or sqrt(2)."
+            "error": "Invalid input for initial guess or value. Use numbers like pi/2 or sqrt(2)."
         }
 
     order = input_data.order
-
     x = sp.symbols('x')
-    f = sp.sympify(func_str)
 
     try:
-        # Generate the full Taylor series
+        # ✅ Let sympify recognize functions like sin, cos, etc.
+        f = sp.sympify(func_str, locals=sp.__dict__)
+
+        # Generate the full Taylor series at x0
         full_series = f.series(x, x0, order + 1).removeO()
         latex_series = sp.latex(full_series)
         math_expr_str = str(full_series.expand())
 
-        # Generate up to 5 Taylor series of order 1 to 5
+        # Generate up to 5 Taylor series of increasing order
         taylor_functions = []
         for n in range(1, min(6, order + 1)):
             approx = f.series(x, x0, n + 1).removeO()
             taylor_functions.append(str(approx.expand()))
 
+        # Evaluate the final full series at x_val
         approximation = float(full_series.subs(x, x_val).evalf())
 
         return {
@@ -49,4 +50,4 @@ def taylor_series(input_data: TaylorInput):
         }
 
     except Exception as e:
-        return {"error": "Failed to generate Taylor series. Check the input."}
+        return {"error": f"Failed to generate Taylor series. Check the input.\n{str(e)}"}
