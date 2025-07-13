@@ -5,6 +5,8 @@ body{
     flex-direction: column;
     padding-top:10rem;
     gap:2rem;
+    background-size: auto;
+    background-attachment: fixed;
 }
 .heading {
     font-size: 5.4rem;

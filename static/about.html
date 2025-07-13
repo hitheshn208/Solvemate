@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=home" />
 </head>
 <body>
-  
+
   <div class="navigation" id="navbar">
         <div class="symbols">
         <img src="/static/solvemate symbol.png" alt="">
@@ -43,5 +43,25 @@ Designed for engineering and math students, Solvemate breaks down complex comput
     </div>
     </div>
   </div>
+
+  <script>
+const navbar = document.getElementById('navbar');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  const currentScrollY = window.scrollY;
+
+  if (currentScrollY > lastScrollY) {
+    // Scrolling down → hide navbar
+    navbar.classList.add('nav-hidden');
+  } else {
+    // Scrolling up → show navbar
+    navbar.classList.remove('nav-hidden');
+  }
+
+  lastScrollY = currentScrollY;
+});
+</script>
+
 </body>
 </html>
