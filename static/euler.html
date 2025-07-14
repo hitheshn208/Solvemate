@@ -91,10 +91,10 @@
         x_target: xTarget,
         h: h
       };
-// http://127.0.0.1:8000
+// 
 
       try {
-        const res = await fetch("/euler", {
+        const res = await fetch("http://127.0.0.1:8000/euler", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -109,7 +109,13 @@
           return;
         }
 
-        resultDiv.innerText = `✅ Final Approximation: y(${xTarget}) ≈ ${result.result}`;
+       if (result.steps && result.steps.length > 0) {
+    const finalStep = result.steps[result.steps.length - 1];
+    resultDiv.innerText = `✅ Final Approximation: y(${finalStep.x}) ≈ ${finalStep.y}`;
+} else {
+    resultDiv.innerText = `Some error occured. No valid steps returned from backend.`;
+}
+
 
         // Build the step table
         let table = `<table><tr><th>Step</th><th>x</th><th>y</th></tr>`;
