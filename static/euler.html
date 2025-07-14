@@ -91,10 +91,10 @@
         x_target: xTarget,
         h: h
       };
-// 
+// http://127.0.0.1:8000
 
       try {
-        const res = await fetch("http://127.0.0.1:8000/euler", {
+        const res = await fetch("/euler", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
