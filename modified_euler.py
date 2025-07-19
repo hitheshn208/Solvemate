@@ -27,12 +27,16 @@ def modified_euler_method(data: ModifiedEulerInput):
     h = data.h
     steps = []
 
-    while x_val <= data.x_target + 1e-8:
+    while round(x_val, 10) < round(data.x_target, 10):  # ✅ avoid overshooting
         try:
-            f1 = f_lambda(x_val, y_val)  # slope at (x_n, y_n)
-            y_predict = y_val + h * f1   # Euler prediction
-            f2 = f_lambda(x_val + h, y_predict)  # slope at (x_{n+1}, y_predict)
-            y_final = y_val + (h / 2) * (f1 + f2)  # corrected y
+            f1 = f_lambda(x_val, y_val)
+            y_predict = y_val + h * f1
+
+            f2 = f_lambda(x_val + h, y_predict)
+            y_corr = y_val + (h / 2) * (f1 + f2)
+
+            f3 = f_lambda(x_val + h, y_corr)
+            y_final = y_val + (h / 2) * (f1 + f3)
 
             steps.append({
                 "step": len(steps),
@@ -41,17 +45,18 @@ def modified_euler_method(data: ModifiedEulerInput):
                 "y_predict": round(y_predict, 4),
                 "f1": round(f1, 4),
                 "f2": round(f2, 4),
-                "y_final": round(y_final, 4)
+                "f3": round(f3, 4),
+                "y_final": round(y_final, 4),
+                "evaluations": 3
             })
 
-            x_val = round(x_val + h, 10)  # advance x
-            y_val = y_final               # update y
+            x_val = x_val + h
+            y_val = y_final  # ✅ update using full precision
 
         except Exception:
             return {"error": f"❌ Could not evaluate at x = {x_val}, y = {y_val}"}
 
     return {
-        "result": round(y_val, 4),
+        "result": round(y_val, 4),   # ✅ Final result to 4 decimals
         "steps": steps
     }
-

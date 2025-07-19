@@ -19,7 +19,7 @@ def euler_method(data: EulerInput):
         f_expr = sp.sympify(data.function)  # user enters dy/dx = f(x, y)
         f_lambda = sp.lambdify((x, y), f_expr, modules=["math"])
     except Exception:
-        return {"error": "❌ Invalid function format. Use valid expression like '3*exp(x) + 2*y'"}
+        return {"error": "Invalid function format."}
 
     x_val = data.x0
     y_val = data.y0
